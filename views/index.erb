@@ -1,0 +1,13 @@
+<%writings.each do |writing|%>
+	<%if Time.now.to_i - writing[:creation] < 7200%>
+		<span style="overflow:hidden;max-height:25%!important;max-width:25%!important;position:absolute;top:<%=writing[:y]%>%;left:<%=writing[:x]%>%;opacity:<%=1.0-((Time.now.to_f - writing[:creation].to_f) / 7200.0)%>;"><%=writing[:message]%></span>
+	<%end%>
+<%end%>
+<script>
+	setInterval(function() {
+		$.get("<%=URL%>/?blank=on", function(data) {
+			$("div#canvas").empty();
+			$("div#canvas").append($.parseHTML(data));
+		});
+	}, 1000);
+</script>
